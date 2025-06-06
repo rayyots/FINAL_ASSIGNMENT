@@ -1,30 +1,35 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UI;
 
 public class PuzzleManager : MonoBehaviour
 {
-    public static PuzzleManager instance;
-    private int correctCount = 0;
+    public XRSocketInteractor redSocket;
+    public XRSocketInteractor greenSocket;
+    public XRSocketInteractor blueSocket;
 
     public GameObject winText;
     public GameObject restartButton;
 
-    void Awake()
-    {
-        instance = this;
-    }
+    private bool puzzleComplete = false;
 
-    public void RegisterPlacement()
+    void Update()
     {
-        correctCount++;
-        if (correctCount == 3)
+        if (puzzleComplete) return;
+
+        bool redPlaced = redSocket.hasSelection && redSocket.firstInteractableSelected.transform.name == "RedCube";
+        bool greenPlaced = greenSocket.hasSelection && greenSocket.firstInteractableSelected.transform.name == "GreenCube";
+        bool bluePlaced = blueSocket.hasSelection && blueSocket.firstInteractableSelected.transform.name == "BlueCube";
+
+        if (redPlaced && greenPlaced && bluePlaced)
         {
+            puzzleComplete = true;
             winText.SetActive(true);
             restartButton.SetActive(true);
         }
     }
 
-    public void RestartPuzzle()
+    public void Restart()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
