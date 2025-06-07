@@ -7,9 +7,9 @@ TagManager:
   - RedCube
   - GreenCube
   - BlueCube
-  - RedPlaceholder
-  - GreenPlaceholder
-  - BluePlaceholder
+  - Red
+  - Green
+  - Blue
   layers:
   - Default
   - TransparentFX
